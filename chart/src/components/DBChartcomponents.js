@@ -30,6 +30,7 @@ const DBChartComponent = () => {
         const labels = [];
         const speedAverages = [];
         const engineLoadAverages = [];
+        
   
         Object.keys(groupedByMinute).forEach(time => {
           labels.push(time);

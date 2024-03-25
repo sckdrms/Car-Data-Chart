@@ -7,7 +7,7 @@ function App() {
     <div className="App">
       {/* <ChartComponent>
       </ChartComponent> */}
-      블라블라
+      Chart
       <DBChartComponent>
       </DBChartComponent>
     </div>
