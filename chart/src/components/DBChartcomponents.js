@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import Chart from 'chart.js/auto';
+import moment from 'moment';
 
 const DBChartComponent = () => {
   const [chartData, setChartData] = useState({});
@@ -12,37 +13,56 @@ const DBChartComponent = () => {
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
-        const data = await response.json();
-
-        // 서버로부터 받은 데이터를 차트 데이터 형식으로 변환
-        const timestamps = data.map(item => item.Timestamp);
-        const speeds = data.map(item => item.Speed);
-        const engineLoads = data.map(item => item.EngineLoad);
-        // ... 다른 데이터도 이와 같은 방식으로 매핑합니다.
-
+        const rawData = await response.json();
+  
+        // 데이터를 분(minute) 별로 그룹화합니다.
+        const groupedByMinute = {};
+        rawData.forEach(item => {
+          // 타임스탬프를 분으로 변환합니다.
+          const time = moment(item.Timestamp, 'HH:mm:ss').startOf('minute').format('HH:mm');
+          if (!groupedByMinute[time]) {
+            groupedByMinute[time] = [];
+          }
+          groupedByMinute[time].push(item);
+        });
+  
+        // 각 분에 대한 평균 속도와 엔진 부하를 계산합니다.
+        const labels = [];
+        const speedAverages = [];
+        const engineLoadAverages = [];
+  
+        Object.keys(groupedByMinute).forEach(time => {
+          labels.push(time);
+          const totalSpeed = groupedByMinute[time].reduce((sum, current) => sum + current.Speed, 0);
+          const totalEngineLoad = groupedByMinute[time].reduce((sum, current) => sum + current.EngineLoad, 0);
+          speedAverages.push(totalSpeed / groupedByMinute[time].length);
+          engineLoadAverages.push(totalEngineLoad / groupedByMinute[time].length);
+        });
+  
+        // 차트 데이터를 설정합니다.
         setChartData({
-          labels: timestamps,
+          labels,
           datasets: [
             {
               label: 'Speed',
-              data: speeds,
+              data: speedAverages,
               borderColor: 'rgb(75, 192, 192)',
               tension: 0.1
             },
             {
               label: 'Engine Load',
-              data: engineLoads,
+              data: engineLoadAverages,
               borderColor: 'rgb(255, 99, 132)',
               tension: 0.1
             },
-            // ... 다른 데이터셋을 여기에 추가합니다.
           ]
         });
+  
       } catch (error) {
         console.error("Fetching data error: ", error);
       }
     };
-
+  
     fetchData();
   }, []);
 
