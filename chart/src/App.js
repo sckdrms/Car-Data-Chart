@@ -1,15 +1,15 @@
+// App.js
 import './App.css';
-import ChartComponent from "./components/LocalChartcomponents"
-import DBChartComponent from './components/DBChartcomponents'
-
+import DBChartComponent from './components/DBChartComponents'
+import MainComponent from './components/MainComponents'
 function App() {
   return (
     <div className="App">
-      {/* <ChartComponent>
-      </ChartComponent> */}
-      Chart
-      <DBChartComponent>
-      </DBChartComponent>
+      <MainComponent>
+        {/* <DBChartComponent>
+        </DBChartComponent> */}
+      </MainComponent>
+      
     </div>
   );
 }
