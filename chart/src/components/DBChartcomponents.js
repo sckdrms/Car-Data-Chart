@@ -1,5 +1,3 @@
-//DBChartComponents.js
-
 import React, { useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import Chart from 'chart.js/auto';
@@ -9,8 +7,8 @@ import '../css/DBChart.css';
 
 const DBChartComponent = () => {
   const [chartData, setChartData] = useState({
-    speed: {},
-    rpm: {}, // RPM 차트 데이터를 위한 상태
+    labels: [],
+    datasets: []
   });
 
   useEffect(() => {
@@ -21,52 +19,54 @@ const DBChartComponent = () => {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const rawData = await response.json();
-  
-        const groupedByMinute = {};
+
+        const groupedBySecond = {};
         rawData.forEach(item => {
-          // item.Timestamp가 '2024-04-08T13:52:48.000Z'와 같은 형식이라면 아래와 같이 파싱해야 합니다.
-          const time = moment(item.Timestamp).startOf('minute').format('YYYY-MM-DD.HH:mm');
-          if (!groupedByMinute[time]) {
-            groupedByMinute[time] = [];
+          const time = moment(item.Timestamp).format('YYYY-MM-DD HH:mm:ss');
+          if (!groupedBySecond[time]) {
+            groupedBySecond[time] = [];
           }
-          groupedByMinute[time].push(item);
+          groupedBySecond[time].push(item);
         });
+
         const labels = [];
         const speedAverages = [];
-        const engineLoadAverages = []; // Engine Load 데이터를 위한 배열, 이전에 사용되었습니다.
-        const rpmAverages = []; // RPM 데이터를 위한 새 배열
+        const rpmAverages = [];
+        const engineLoadAverages = [];
 
-        Object.keys(groupedByMinute).forEach(time => {
+        Object.keys(groupedBySecond).forEach(time => {
           labels.push(time);
-          const totalSpeed = groupedByMinute[time].reduce((sum, current) => sum + current.Speed, 0);
-          const totalEngineLoad = groupedByMinute[time].reduce((sum, current) => sum + current.EngineLoad, 0);
-          const totalRPM = groupedByMinute[time].reduce((sum, current) => sum + current.RPM, 0); // RPM 합계 계산
-
-          speedAverages.push(totalSpeed / groupedByMinute[time].length);
-          engineLoadAverages.push(totalEngineLoad / groupedByMinute[time].length); // 이전에 사용되었습니다.
-          rpmAverages.push(totalRPM / groupedByMinute[time].length); // RPM 평균 계산
+          const totalSpeed = groupedBySecond[time].reduce((sum, current) => sum + parseInt(current.Speed), 0);
+          const totalEngineLoad = groupedBySecond[time].reduce((sum, current) => sum + parseFloat(current.EngineLoad), 0);
+          const totalRPM = groupedBySecond[time].reduce((sum, current) => sum + parseInt(current.RPM), 0);
+        
+          speedAverages.push(totalSpeed / groupedBySecond[time].length);
+          engineLoadAverages.push(totalEngineLoad / groupedBySecond[time].length);
+          rpmAverages.push(totalRPM / groupedBySecond[time].length);
         });
 
         setChartData({
           labels,
-          speed: {
-            labels,
-            datasets: [{
+          datasets: [
+            {
               label: 'Speed',
               data: speedAverages,
               borderColor: 'rgb(75, 192, 192)',
               tension: 0.1
-            }]
-          },
-          rpm: {
-            labels,
-            datasets: [{
+            },
+            {
               label: 'RPM',
               data: rpmAverages,
               borderColor: 'rgb(255, 99, 132)',
               tension: 0.1
-            }]
-          }
+            },
+            {
+              label: 'Engine Load',
+              data: engineLoadAverages,
+              borderColor: 'rgb(54, 162, 235)',
+              tension: 0.1
+            }
+          ]
         });
       } catch (error) {
         console.error("Fetching data error: ", error);
@@ -78,20 +78,11 @@ const DBChartComponent = () => {
 
   return (
     <div className='DBchart' style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', gridTemplateRows: '1fr 1fr', height: '100vh' }}>
-      <div className='speedchart' style={{ gridArea: '2 / 1 / 3 / 3' }}>
-        {chartData.speed.datasets && chartData.speed.datasets.length > 0 ? (
-          <Line data={chartData.speed} />
-        ) : (
-          <p>Loading Speed data...</p>
-        )}
-      </div>
-      <div className='rpmchart' style={{ gridArea: '2 / 3 / 3 / 5' }}>
-        {chartData.rpm.datasets && chartData.rpm.datasets.length > 0 ? (
-          <Line data={chartData.rpm} />
-        ) : (
-          <p>Loading RPM data...</p>
-        )}
-      </div>
+      {chartData.datasets && chartData.datasets.length > 0 ? (
+        <Line data={chartData} />
+      ) : (
+        <p>Loading data...</p>
+      )}
     </div>
   );
 };
