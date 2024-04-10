@@ -1,3 +1,5 @@
+//DBChartComponents.js
+
 import React, { useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import Chart from 'chart.js/auto';
@@ -22,13 +24,13 @@ const DBChartComponent = () => {
   
         const groupedByMinute = {};
         rawData.forEach(item => {
-          const time = moment(item.Timestamp, 'HH:mm:ss').startOf('minute').format('HH:mm');
+          // item.Timestamp가 '2024-04-08T13:52:48.000Z'와 같은 형식이라면 아래와 같이 파싱해야 합니다.
+          const time = moment(item.Timestamp).startOf('minute').format('YYYY-MM-DD.HH:mm');
           if (!groupedByMinute[time]) {
             groupedByMinute[time] = [];
           }
           groupedByMinute[time].push(item);
         });
-
         const labels = [];
         const speedAverages = [];
         const engineLoadAverages = []; // Engine Load 데이터를 위한 배열, 이전에 사용되었습니다.
@@ -70,7 +72,7 @@ const DBChartComponent = () => {
         console.error("Fetching data error: ", error);
       }
     };
-
+  
     fetchData();
   }, []);
 

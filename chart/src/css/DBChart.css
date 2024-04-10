@@ -126,12 +126,12 @@
     z-index: 5;
     width: 100vw;
     height: 50vh;
-    background-color: #3b3b3b;
+    background-color: #b8b8b8;
     overflow: 'hidden'
   }
 
   .speedchart, .rpmchart{
     border-radius: 10px;
-    border: solid 3px #eee;
+    border: solid 3px rgb(0, 0, 0);
   }
 /* DBchart */

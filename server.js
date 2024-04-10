@@ -1,3 +1,5 @@
+//server.js
+
 const express = require('express');
 const path = require('path');
 const mysql = require('mysql2');
@@ -35,7 +37,7 @@ app.listen(port, () => {
 
 app.get('/car-data', async (req, res) => {
   try {
-    const [rows, fields] = await promisePool.query("SELECT * FROM gm_spark_data"); // car_table_name은 실제 테이블 이름으로 변경해야 합니다.
+    const [rows, fields] = await promisePool.query("SELECT * FROM GM_Spark_data1"); // car_table_name은 실제 테이블 이름으로 변경해야 합니다.
     res.json(rows);
   } catch (err) {
     console.error(err);
