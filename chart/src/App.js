@@ -1,16 +1,19 @@
 // App.js
 import './App.css';
-import DBChartComponent from './components/DBChartComponents'
-import MainComponent from './components/MainComponents'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import MainComponent from './components/MainComponents';
+import LoginComponent from './components/LoginComponent';
+
 function App() {
   return (
-    <div className="App">
-      <MainComponent>
-        {/* <DBChartComponent>
-        </DBChartComponent> */}
-      </MainComponent>
-      
-    </div>
+    <Router>
+      <div className="App">
+        <Routes>
+          <Route path="/main" element={<LoginComponent />} />
+          <Route path="/" element={<MainComponent />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 

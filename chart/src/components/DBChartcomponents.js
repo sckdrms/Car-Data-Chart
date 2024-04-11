@@ -77,9 +77,11 @@ const DBChartComponent = () => {
   }, []);
 
   return (
-    <div className='DBchart' style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', gridTemplateRows: '1fr 1fr', height: '100vh' }}>
+    <div className='DBChartBox' style={{ }}>
       {chartData.datasets && chartData.datasets.length > 0 ? (
+        <div className='DBchart'>
         <Line data={chartData} />
+        </div>
       ) : (
         <p>Loading data...</p>
       )}
