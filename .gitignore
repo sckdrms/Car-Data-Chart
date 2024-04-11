@@ -5,7 +5,8 @@ node_modules
 /.pnp
 .pnp.js
 key.js
-
+netlify.toml
+_redirects
 # testing
 /coverage
 
