@@ -1,3 +1,5 @@
+/* DBChart.css */
+
 /* loader */
 .loaderdiv{
   width: 100vw;
@@ -126,27 +128,37 @@
 /* DBchart */
 .DBChartBox {
   display: grid;
-  grid-template-columns: repeat(4, 1fr); /* 4개의 열, 각각 1fr 크기 */
-  grid-template-rows: repeat(3, 1fr); /* 3개의 행, 각각 1fr 크기 */
+  grid-template-columns: 1fr 1fr 1fr 1fr; /* 4개의 열 */
+  grid-template-rows: 1fr 1fr; /* 2개의 행 */
   height: 100vh;
 }
 
-.DBchart {
-  z-index: 5;
-  grid-column: 1 / -1; /* 첫 번째 열부터 마지막 열까지 확장 */
-  grid-row: 2 / -1; /* 두 번째 행부터 시작하여 2개의 행을 차지 */
+.speedchart, .rpmchart, .engineloadchart, .throttleposchart {
   background-color: #b8b8b8;
-  overflow: hidden; /* 따옴표 제거 */
-  display: grid; /* Grid 레이아웃 적용 */
-  place-items: center; /* 수평 및 수직 방향으로 중앙 정렬 */
+  overflow: hidden;
+  display: grid;
+  place-items: center;
   border-radius: 10px;
-  border: solid 3px rgb(0, 0, 0);
+  border: solid 3px rgb(208, 255, 0);
 }
 
+.speedchart {
+  grid-column: 1 / 3; /* 첫 번째와 두 번째 열을 차지 */
+  grid-row: 1 / 2; /* 두 번째 행 */
+}
 
+.rpmchart {
+  grid-column: 3 / 5; /* 세 번째와 네 번째 열을 차지 */
+  grid-row: 1 / 2; /* 두 번째 행 */
+}
 
-  .speedchart, .rpmchart{
-    border-radius: 10px;
-    border: solid 3px rgb(155, 155, 155);
-  }
+.throttleposchart{
+  grid-column: 1 / 3; /* 첫 번째와 두 번째 열을 차지 */
+  grid-row: 2 / 3; /* 두 번째 행 */
+}
+
+.engineloadchart{
+  grid-column: 3 / 5; /* 세 번째와 네 번째 열을 차지 */
+  grid-row: 2 / 3; /* 두 번째 행 */
+}
 /* DBchart */

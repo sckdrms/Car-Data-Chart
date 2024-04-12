@@ -197,4 +197,41 @@
   font-weight: 600;
   color: var(--font-color);
   cursor: pointer;
-} 
+}
+/* 폰번호 입력창 크기 조정 */
+.phone-input-group input {
+  flex: 1; /* 각 필드가 유연하게 늘어나도록 */
+  max-width: 30px; /* 최대 너비 설정 */
+  margin-right: 10px; /* 입력창 사이의 간격 */
+}
+
+/* 생년월일 드롭다운 크기 조정 및 수평 정렬 */
+.birth-date-selectors {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.birth-date-selectors select {
+  flex: 1;
+  max-width: 100px; /* 최대 너비 설정 */
+  margin-right: 10px; /* 드롭다운 사이의 간격 */
+}
+
+/* 마지막 요소의 여분 마진 제거 */
+.birth-date-selectors select:last-child,
+.phone-input-group input:last-child {
+  margin-right: 0;
+}
+
+/* 버튼 및 입력 필드의 일관된 너비 설정 */
+.flip-card__input,
+.flip-card__btn {
+  width: auto; /* 너비를 auto로 설정하여 콘텐츠에 맞게 조정 */
+  min-width: 50px; /* 최소 너비를 설정하여 너무 작아지는 것을 방지 */
+}
+
+/* 버튼의 너비를 좀 더 특정하게 조절하고 싶다면 */
+.flip-card__btn {
+  width: 120px; /* 버튼 너비를 120px로 설정 */
+}
