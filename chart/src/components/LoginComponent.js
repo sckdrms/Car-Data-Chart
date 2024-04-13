@@ -1,4 +1,6 @@
+// LoginComponent.js
 import React, { useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom'; // useNavigate를 import
 import '../css/LoginComponent.css';
 
 function LoginComponent() {
@@ -19,6 +21,7 @@ function LoginComponent() {
 
   const phone2Ref = useRef();
   const phone3Ref = useRef();
+  const navigate = useNavigate(); // useNavigate 훅 사용
 
   const handleToggleChange = () => {
     setIsFlipped(!isFlipped);
@@ -28,7 +31,6 @@ function LoginComponent() {
     const { name, value } = event.target;
     setFormData(prevState => ({ ...prevState, [name]: value }));
 
-    // 자동으로 다음 전화번호 입력칸으로 이동
     if (name === 'phone1' && value.length === 3) {
       phone2Ref.current.focus();
     } else if (name === 'phone2' && value.length === 4) {
@@ -37,34 +39,49 @@ function LoginComponent() {
   };
 
   const handleSubmit = async (event) => {
-  event.preventDefault();
-  const fullPhone = `${formData.phone1}${formData.phone2}${formData.phone3}`;
-  const submitData = {
-    ...formData,
-    phone: fullPhone,  // 전화번호를 하나의 문자열로 합침
-    birth: `${formData.birthYear}-${formData.birthMonth}-${formData.birthDay}`  // 생년월일을 하나의 문자열로 합침
-  };
-  delete submitData.phone1;
-  delete submitData.phone2;
-  delete submitData.phone3;
-  delete submitData.birthYear;
-  delete submitData.birthMonth;
-  delete submitData.birthDay;
+    event.preventDefault();
+    const { email, password, name, phone1, phone2, phone3, sex, birthYear, birthMonth, birthDay, vehicleNum } = formData;
+    const fullPhone = `${phone1}-${phone2}-${phone3}`;
+    const birth = `${birthYear}-${birthMonth}-${birthDay}`;
 
-  const url = isFlipped ? '/api/signup' : '/api/login';
-  const response = await fetch(url, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(submitData)
-  });
-  const data = await response.json();
-  if (response.ok) {
-    alert('회원가입이 완료되었습니다!!');
-    setIsFlipped(false); // 회원가입 성공 시 로그인 화면으로 전환
-  } else {
-    alert(data.message || '회원가입에 실패하였습니다.'); // 서버에서 보내진 에러 메시지를 표시
-  }
-};
+    const submitData = {
+      email,
+      password,
+      name,
+      phone: fullPhone,
+      sex,
+      birth,
+      vehicleNum
+    };
+
+    delete submitData.phone1;
+    delete submitData.phone2;
+    delete submitData.phone3;
+    delete submitData.birthYear;
+    delete submitData.birthMonth;
+    delete submitData.birthDay;
+
+    const url = isFlipped ? '/api/signup' : '/api/login';
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(submitData)
+    });
+
+    if (response.ok) {
+      const data = await response.json(); // 응답 JSON을 파싱
+      if (url === '/api/login') {
+        alert(`환영합니다 ${data.username}`); // 사용자 ID를 알림 메시지에 포함
+        navigate('/main'); // 로그인 성공 시 /main으로 이동
+      } else {
+        alert('회원가입이 완료되었습니다!!');
+        setIsFlipped(false); // 회원가입 성공 시 로그인 화면으로 전환
+      }
+    } else {
+      const data = await response.json();
+      alert(data.message || (isFlipped ? '회원가입에 실패하였습니다.' : '로그인에 실패하였습니다.'));
+    }
+  };
 
   return (
     <div className="wrapper">
