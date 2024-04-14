@@ -1,4 +1,3 @@
-// DBChartComponents.js
 import React, { useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import Chart from 'chart.js/auto';
@@ -13,6 +12,7 @@ const DBChartComponent = () => {
   });
 
   useEffect(() => {
+    // 데이터를 가져오는 함수
     const fetchData = async () => {
       try {
         const response = await fetch('/car-data');
@@ -20,7 +20,7 @@ const DBChartComponent = () => {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const rawData = await response.json();
-    
+
         const groupedBySecond = {};
         rawData.forEach(item => {
           const time = moment(item.Timestamp).format('YYYY-MM-DD HH:mm:ss');
@@ -29,26 +29,26 @@ const DBChartComponent = () => {
           }
           groupedBySecond[time].push(item);
         });
-    
+
         const labels = [];
         const speedAverages = [];
         const rpmAverages = [];
         const throttlePosAverages = [];
         const engineLoadAverages = [];
-    
+
         Object.keys(groupedBySecond).forEach(time => {
           labels.push(time);
           const totalSpeed = groupedBySecond[time].reduce((sum, current) => sum + parseInt(current.Speed), 0);
           const totalRPM = groupedBySecond[time].reduce((sum, current) => sum + parseInt(current.RPM), 0);
-          const totalThrottlePos = groupedBySecond[time].reduce((sum, current) => sum + parseFloat(current.ThrottlePos), 0); // 수정 필요
+          const totalThrottlePos = groupedBySecond[time].reduce((sum, current) => sum + parseFloat(current.ThrottlePos), 0);
           const totalEngineLoad = groupedBySecond[time].reduce((sum, current) => sum + parseFloat(current.EngineLoad), 0);
-    
+
           speedAverages.push(totalSpeed / groupedBySecond[time].length);
           rpmAverages.push(totalRPM / groupedBySecond[time].length);
-          throttlePosAverages.push(totalThrottlePos / groupedBySecond[time].length); // 여기를 수정
+          throttlePosAverages.push(totalThrottlePos / groupedBySecond[time].length);
           engineLoadAverages.push(totalEngineLoad / groupedBySecond[time].length);
         });
-    
+
         setChartData({
           labels,
           datasets: [
@@ -83,13 +83,15 @@ const DBChartComponent = () => {
       }
     };
     
-    fetchData();
+    const intervalId = setInterval(fetchData, 1000); // 1초 마다 fetchData를 실행
+
+    return () => clearInterval(intervalId); // 컴포넌트가 언마운트되면 인터벌 해제
   }, []);
 
   return (
-    <div className='DBChartBox' style={{ }}>
+    <div className='DBChartBox'>
       <div className='speedchart'>
-        {chartData.datasets && chartData.datasets.length > 0 ? (
+        {chartData.datasets.length > 0 ? (
           <Line data={{
             labels: chartData.labels,
             datasets: [chartData.datasets[0]]
@@ -99,7 +101,7 @@ const DBChartComponent = () => {
         )}
       </div>
       <div className='rpmchart'>
-        {chartData.datasets && chartData.datasets.length > 0 ? (
+        {chartData.datasets.length > 0 ? (
           <Line data={{
             labels: chartData.labels,
             datasets: [chartData.datasets[1]]
@@ -109,7 +111,7 @@ const DBChartComponent = () => {
         )}
       </div>
       <div className='throttleposchart'>
-        {chartData.datasets && chartData.datasets.length > 0 ? (
+        {chartData.datasets.length > 0 ? (
           <Line data={{
             labels: chartData.labels,
             datasets: [chartData.datasets[2]]
@@ -119,7 +121,7 @@ const DBChartComponent = () => {
         )}
       </div>
       <div className='engineloadchart'>
-        {chartData.datasets && chartData.datasets.length > 0 ? (
+        {chartData.datasets.length > 0 ? (
           <Line data={{
             labels: chartData.labels,
             datasets: [chartData.datasets[3]]
