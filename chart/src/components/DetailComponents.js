@@ -8,9 +8,8 @@ import AccelerationComponent from './DetailComponents/6AccelerationComponents'
 import DecelerationComponent from './DetailComponents/7DecelerationComponents'
 import DriverScoreComponent from './DetailComponents/8DriverScoreComponents'
 import AverageScoreComponent from './DetailComponents/9AverageScoreComponents'
-import StartLocationComponent from './DetailComponents/10StartLocationComponents'
-import EndLocationComponent from './DetailComponents/11EndLocationComponents'
-import AccidentOccurPercentageComponent from './DetailComponents/12AccidentOccurPercentageComponents'
+import StartEndLocationComponent from './DetailComponents/10Start-End-LocationComponents'
+import AccidentOccurPercentageComponent from './DetailComponents/11AccidentOccurPercentageComponents'
 
 import '../css/DetailComponent.css'
 
@@ -61,10 +60,7 @@ function DetailComponent(){
         <div className='div1-2'>
           <div className='div1-2-1'>
             <div className='div1-2-1-1'>
-              <StartLocationComponent></StartLocationComponent>
-            </div>
-            <div className='div1-2-1-2'>
-              <EndLocationComponent></EndLocationComponent>
+              <StartEndLocationComponent></StartEndLocationComponent>
             </div>
           </div>
           <div className='div1-2-2'>
