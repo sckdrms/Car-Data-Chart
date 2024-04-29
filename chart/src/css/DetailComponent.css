@@ -1,3 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Noto Sans KR", sans-serif;
+  font-weight: 400;
+  text-align: start;
+
+}
+
+.componentname{
+  margin: 15px;
+
+}
 
 .bg{
   background-color: black;
@@ -6,6 +22,7 @@
   border: solid 5px rgb(255, 0, 0);
   z-index: -1;
   overflow: 'hidden';
+  
 }
 
 .div1{
@@ -36,12 +53,14 @@
   width: 100%;
   height: 100%;
   background-color: green;
+  position: relative;
 }
 
 .div1-1-1-2{
   width: 100%;
   height: 100%;
   background-color: blue;
+  position: relative;
 }
 
 .div1-1-2{
@@ -55,13 +74,14 @@
   width: 100%;
   height: 100%;
   background-color: green;
-
+  position: relative;
 }
 
 .div1-1-2-2{
   width: 100%;
   height: 100%;
   background-color: blue;
+  position: relative;
 }
 
 .div1-1-3{
@@ -75,7 +95,7 @@
   width: 100%;
   height: 100%;
   background-color: green;
-
+  position: relative;
 }
 
 .div1-1-3-2{
@@ -83,6 +103,7 @@
   height: 100%;
   display: grid;
   grid-template-rows: 1fr 1fr;
+
 }
 
 .div1-1-3-2-1{
@@ -90,6 +111,7 @@
   width: 100%;
   height: 100%;
   background-color: blue;
+  position: relative;
 }
 
 .div1-1-3-2-2{
@@ -97,7 +119,7 @@
   width: 100%;
   height: 100%;
   background-color: purple;
-
+  position: relative;
 }
 
 .div1-1-4{
@@ -112,6 +134,7 @@
   width: 100%;
   height: 100%;
   background-color: green;
+  position: relative;
 }
 
 .div1-1-4-2{
@@ -119,6 +142,7 @@
   width: 100%;
   height: 100%;
   background-color: blue;
+  position: relative;
 }
 
 .div1-2{
@@ -133,23 +157,21 @@
   display: grid;
   grid-template-rows: 1fr 1fr;
   background-color: green;
+  
 }
 
 .div1-2-1-1{
-  grid-row: 1/2;
+  grid-row: 1/-1;
   width: 100%;
   height: 100%;
   background-color: green;
+  position: relative;
 }
 
-.div1-2-1-2{
-  grid-row: 2/3;
-  width: 100%;
-  height: 100%;
-  background-color: blue;
-}
+
 
 .div1-2-2{
   grid-column: 2/-1;
   background-color: pink;
+  position: relative;
 }
