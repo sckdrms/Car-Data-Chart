@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import DBChartComponent from './DBChartComponents'
 
-import '../css/Main.css'
+import '../css/MainComponents.css'
 
 function MainComponent(){
   return(

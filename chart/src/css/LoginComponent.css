@@ -197,6 +197,7 @@
   font-weight: 600;
   color: var(--font-color);
   cursor: pointer;
+  text-align: center;
 }
 /* 폰번호 입력창 크기 조정 */
 .phone-input-group input {
