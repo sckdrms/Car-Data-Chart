@@ -6,13 +6,16 @@
   box-sizing: border-box;
   font-family: "Noto Sans KR", sans-serif;
   font-weight: 400;
-  text-align: start;
+
 
 }
 
-.componentname{
+.componentname {
   margin: 15px;
+}
 
+.componentname p{
+  text-align: start;
 }
 
 .bg{

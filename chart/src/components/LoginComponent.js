@@ -1,9 +1,11 @@
 // LoginComponent.js
 import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom'; // useNavigate를 import
+import { useAuth } from './AuthContext.js';
 import '../css/LoginComponent.css';
 
 function LoginComponent() {
+  const { login } = useAuth();
   const [isFlipped, setIsFlipped] = useState(false);
   const [formData, setFormData] = useState({
     email: '',
@@ -71,8 +73,9 @@ function LoginComponent() {
     if (response.ok) {
       const data = await response.json(); // 응답 JSON을 파싱
       if (url === '/api/login') {
+        login(data.username);
         alert(`환영합니다 ${data.username}`); // 사용자 ID를 알림 메시지에 포함
-        navigate('/road'); // 로그인 성공 시 /main으로 이동
+        navigate('/'); // 로그인 성공 시 /으로 이동
       } else {
         alert('회원가입이 완료되었습니다!!');
         setIsFlipped(false); // 회원가입 성공 시 로그인 화면으로 전환
@@ -82,6 +85,7 @@ function LoginComponent() {
       alert(data.message || (isFlipped ? '회원가입에 실패하였습니다.' : '로그인에 실패하였습니다.'));
     }
   };
+
 
   return (
     <div className="wrapper">
