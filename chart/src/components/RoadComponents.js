@@ -18,7 +18,7 @@ function RoadComponent() {
   return (
     <div className='roadbg'>
       <div className='Road-Box'>
-        <div className='box1' onClick={() => handleNavigation('https://alphacircleweb.netlify.app/')}>
+        <div className='box1' onClick={() => handleNavigation('/')}>
           <p>소개 사이트</p>
         </div>
         <div className='box2' onClick={() => handleNavigation('/main')}>

@@ -6,11 +6,26 @@ const path = require('path');
 const bcrypt = require('bcrypt');
 const mysql = require('mysql2');
 const bodyParser = require('body-parser');
+const session = require('express-session');
 const DB_CONFIG = require('./key');
 
 const app = express();
 const port = 3001;
 app.use(bodyParser.json());
+
+// session 미들웨어 설정
+app.use(session({
+  secret: '1234',  // 세션을 암호화하는 비밀키
+  resave: false,              // 세션이 변경되지 않았다면 저장하지 않음
+  saveUninitialized: false,   // 세션이 초기화되지 않았다면 저장하지 않음
+  cookie: {
+    httpOnly: true,           // 클라이언트 측 스크립트에서 쿠키를 읽지 못하도록 설정
+    secure: false,            // HTTPS를 사용하지 않는 경우 false로 설정
+    maxAge: 1000 * 60 * 60    // 쿠키의 최대 유효 시간 (1시간)
+  }
+}));
+
+// MySQL connection pool 설정
 const pool = mysql.createPool({
   ...DB_CONFIG,
   waitForConnections: true,
@@ -19,7 +34,6 @@ const pool = mysql.createPool({
 });
 
 const promisePool = pool.promise();
-
 const buildPath = path.join(__dirname, 'chart/build');
 app.use(express.static(buildPath));
 
@@ -66,6 +80,7 @@ app.post('/api/signup', async (req, res) => {
 
 
 // Node.js Express 서버 예시
+// 로그인 API
 app.post('/api/login', async (req, res) => {
   const { email, password } = req.body;
   try {
@@ -76,7 +91,8 @@ app.post('/api/login', async (req, res) => {
       const user = users[0];
       const isValid = await bcrypt.compare(password, user.user_PW);
       if (isValid) {
-        res.status(201).json({ message: '로그인 완료', username: user.user_ID }); // 사용자 ID 포함하여 응답
+        req.session.userId = user.user_ID;  // 세션에 사용자 ID 저장
+        res.status(201).json({ message: '로그인 완료', username: user.user_ID });
       } else {
         res.status(401).json({ message: '로그인에 실패하였습니다.' });
       }
@@ -85,6 +101,16 @@ app.post('/api/login', async (req, res) => {
     console.error(error);
     res.status(500).send('Error logging in');
   }
+});
+
+// 로그아웃 API
+app.get('/logout', (req, res) => {
+  req.session.destroy(err => {
+    if (err) {
+      return res.status(500).send('Failed to logout');
+    }
+    res.send('Logout successful');
+  });
 });
 
 
