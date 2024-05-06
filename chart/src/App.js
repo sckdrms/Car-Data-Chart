@@ -11,6 +11,7 @@ import MainComponent from './components/MainComponents';
 import LoginComponent from './components/LoginComponent';
 import DetailComponent from './components/DetailComponents';
 import RoadComponent from './components/RoadComponents'
+import CollisionComponent from './components/CollisionComponents';
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
             <Route path="/road" element={<RoadComponent />} />
             <Route path="/main" element={<MainComponent />} />
             <Route path="/detail" element={<DetailComponent />} />
+            <Route path="/collision" element={<CollisionComponent />} />
 
             <Route path='*' element={<P404></P404>} />
           </Routes>
