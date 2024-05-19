@@ -134,12 +134,12 @@
 }
 
 .speedchart, .rpmchart, .engineloadchart, .throttleposchart {
-  background-color: #b8b8b8;
+  background-color: #ffffff;
   overflow: hidden;
   display: grid;
   place-items: center;
-  border-radius: 10px;
-  border: solid 3px rgb(208, 255, 0);
+  border-radius: 5px;
+  border: solid 3px rgb(0, 0, 0);
 }
 
 .speedchart {

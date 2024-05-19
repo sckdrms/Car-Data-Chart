@@ -6,7 +6,7 @@ import '../css/MainComponents.css'
 
 function MainComponent(){
   return(
-    <div className='bg'>
+    <div className='bg1'>
       <DBChartComponent></DBChartComponent>
     </div>
   )

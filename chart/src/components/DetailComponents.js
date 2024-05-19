@@ -15,7 +15,7 @@ import '../css/DetailComponent.css'
 
 function DetailComponent(){
   return(
-    <div className='bg'>
+    <div className='bg-detail'>
 
       <div className='div1'>
         <div className='div1-1'>

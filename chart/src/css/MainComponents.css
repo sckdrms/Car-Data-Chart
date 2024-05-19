@@ -1,8 +1,6 @@
-.bg{
-  background-image: url(../black.png);
+.bg1{
   width: 100vw;
   height: 100vh;
-  border: solid 5px red;
   z-index: -1;
   overflow: 'hidden'
 }

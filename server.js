@@ -1,6 +1,5 @@
 //server.js
 
-
 const express = require('express');
 const path = require('path');
 const bcrypt = require('bcrypt');
@@ -12,6 +11,16 @@ const DB_CONFIG = require('./key');
 const app = express();
 const port = 3001;
 app.use(bodyParser.json());
+const pool = mysql.createPool({
+  ...DB_CONFIG,
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0
+});
+
+// 비디오 파일이 저장된 디렉토리 경로
+const pedalVideoDirectory = '/workspace/SW_18/pedalvideo';
+const faceVideoDirectory = '/workspace/SW_18/facevideo';
 
 // session 미들웨어 설정
 app.use(session({
@@ -24,14 +33,6 @@ app.use(session({
     maxAge: 1000 * 60 * 60    // 쿠키의 최대 유효 시간 (1시간)
   }
 }));
-
-// MySQL connection pool 설정
-const pool = mysql.createPool({
-  ...DB_CONFIG,
-  waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0
-});
 
 const promisePool = pool.promise();
 const buildPath = path.join(__dirname, 'chart/build');
@@ -92,7 +93,7 @@ app.post('/api/login', async (req, res) => {
       const isValid = await bcrypt.compare(password, user.user_PW);
       if (isValid) {
         req.session.userId = user.user_ID;  // 세션에 사용자 ID 저장
-        res.status(201).json({ message: '로그인 완료', username: user.user_ID });
+        res.status(201).json({ message: '로그인 완료', username: user.user_Name });
       } else {
         res.status(401).json({ message: '로그인에 실패하였습니다.' });
       }
