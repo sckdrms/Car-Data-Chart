@@ -1,1 +1,16 @@
-리드미를 기대하고 오신분껜 죄송하지만 업데이트 중이라 연락 주시면 동영상 자료로 알려드리겠습니다 :)
+* 사용 기술
+  - python
+  - Mysql
+  - React
+  - Node.js
+  - Groomide
+
+### 시스템 구성도
+![4Cap-soft-wid-ver2](https://github.com/sckdrms/Vehicle-data-analysis-dashboard-for-sudden-acceleration-accidents/assets/56631950/1b54b7ff-35da-41c6-a590-f0202c2d06be)
+
+
+* * *
+
+### 결과물 사진
+##### 사용자 인터페이스(UI)
+추후 추가 예정
