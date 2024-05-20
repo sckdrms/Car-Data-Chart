@@ -6,9 +6,7 @@
   - Groomide
 
 ### 시스템 구성도
-![Uploading 4Cap-soft-wid-ver2.png…]()
-
-
+![4Cap-soft-wid-ver2](https://github.com/sckdrms/Vehicle-data-analysis-dashboard-for-sudden-acceleration-accidents/assets/56631950/1f1031f7-8c51-459e-8144-7704dab1a274)
 
 * * *
 
