@@ -14,7 +14,7 @@
 const DB_CONFIG = {
   host: 'localhost',
   user: 'root',
-  password: 'rms13597123!@#',
+  password: '',
   database: 'car',
   port: 3308
 };
