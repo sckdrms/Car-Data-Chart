@@ -38,7 +38,7 @@ function DIstanceComponent() {
     <div className='componentname'>
       <p>주행 거리</p>
       <p className='currentdistance'>{currentdistance !== null ? `${currentdistance}km` : 'Loading...'}</p>
-	    <p className='totaldistance-title'>누적 주행 거리</p>
+	  <p className='totaldistance-title'>누적 주행 거리</p>
       <p className='totaldistance'>{totaldistance ? `${totaldistance}km` : "준비중..."}</p>
     </div>
   );

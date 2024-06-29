@@ -131,8 +131,8 @@ useEffect(() => {
     const collisionIndex = sessions[currentSessionIndex].collisionIndices[0];
     const collisionTimestamp = sessions[currentSessionIndex].session[collisionIndex].Timestamp;
     const formattedTime = formatTimeForVideo(collisionTimestamp);
-    const faceVideoUrl = `https://lm8gcsxc-3001.asse.devtunnels.ms/facevideo/${formattedTime}_h264.mp4`;
-    const pedalVideoUrl = `https://lm8gcsxc-3001.asse.devtunnels.ms/pedalvideo/${formattedTime}_h264.mp4`;    
+    const faceVideoUrl = `https://chartweb.run.goorm.site/facevideo/${formattedTime}_h264.mp4`;
+    const pedalVideoUrl = `https://chartweb.run.goorm.site/pedalvideo/${formattedTime}_h264.mp4`;    
     console.log(`Video URL: ${faceVideoUrl}`);
     setSelectedVideos({ faceVideo: faceVideoUrl, pedalVideo: pedalVideoUrl });
   }
@@ -360,6 +360,9 @@ const gaugeOptions = (title, max, data) => ({
   chart: {
     type: 'solidgauge',
     height: '80%'
+  },
+  credits: {
+      enabled: false
   },
   title: {
     text: title

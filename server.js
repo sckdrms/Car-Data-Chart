@@ -7,6 +7,7 @@ const mysql = require('mysql2');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const DB_CONFIG = require('./key');
+const cors = require('cors');
 
 const app = express();
 const port = 3001;
@@ -21,6 +22,14 @@ const pool = mysql.createPool({
 // 비디오 파일이 저장된 디렉토리 경로
 const pedalVideoDirectory = '/workspace/SW_18/pedalvideo';
 const faceVideoDirectory = '/workspace/SW_18/facevideo';
+
+// CORS 미들웨어를 사용하여 모든 도메인에서의 접근을 허용
+app.use(cors());
+
+// 정적 파일 경로 설정
+app.use('/pedalvideo', express.static(pedalVideoDirectory));
+app.use('/facevideo', express.static(faceVideoDirectory));
+
 
 // session 미들웨어 설정
 app.use(session({
